@@ -11,29 +11,29 @@ import (
 
 // OPTIONS
 type Option struct {
-	Conf config.Config
-	Logger logger.Logger
+	Conf           config.Config
+	Logger         logger.Logger
 	ServiceManager services.IServiceManager
 }
 
 // NEW
-func New(option Option) gin.Engine {
+func New(option Option) *gin.Engine {
 	router := gin.Default()
 
 	handlerV1 := v1.New(&v1.HandlerV1Config{
-		Logger: option.Logger,
+		Logger:         option.Logger,
 		ServiceManager: option.ServiceManager,
-		Cfg: option.Conf,
+		Cfg:            option.Conf,
 	})
 
 	api := router.Group("/v1")
 
 	api.POST("/todo", handlerV1.CreateTodo)
 	api.GET("/todo/:id", handlerV1.GetTodo)
-	//api.GET("/todos", handlerV1.GetTodos)
-	//api.GET("/todos/:time", handlerV1.GetTodosByDeadline)
-	//api.PUT("/todo/:id", handlerV1.UpdateTodo)
-	//api.DELETE("/todo/:id", handlerV1.DeleteTodo)
+	api.GET("/todos", handlerV1.GetTodos)
+	api.GET("/todos/:time", handlerV1.GetTodosByDeadline)
+	api.PUT("/todo/:id", handlerV1.UpdateTodo)
+	api.DELETE("/todo/:id", handlerV1.DeleteTodo)
 
 	return router
 }

@@ -30,13 +30,12 @@ func NewServiceManager(conf *config.Config) (IServiceManager, error) {
 		fmt.Sprintf("%s:%d", conf.TodoServiceHost, conf.TodoServicePort),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
-
 	if err != nil {
 		return nil, err
 	}
 
 	serviceManager := &serviceManager{
-		todoService: pb.NewTodoServiceClient(connTodo)
+		todoService: pb.NewTodoServiceClient(connTodo),
 	}
 
 	return serviceManager, nil

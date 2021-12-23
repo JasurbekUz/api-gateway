@@ -7,7 +7,7 @@ import (
 	"github.com/JasurbekUz/api-gateway/services"
 )
 
-func main () {
+func main() {
 	cfg := config.Load()
 	log := logger.New(cfg.LogLevel, "api_gateway")
 
