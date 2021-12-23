@@ -68,7 +68,7 @@ func (h *handlerV1) GetTodo(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// ListTodos returns list of users
+// ListTodos returns list of todos
 // route /v1/todos/ [get]
 func (h *handlerV1) GetTodos(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
@@ -104,7 +104,7 @@ func (h *handlerV1) GetTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// ListTodos returns list of users
+// ListTodos by deadline returns list of todos
 // route /v1/todos/ [get]
 func (h *handlerV1) GetTodosByDeadline(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
@@ -144,7 +144,7 @@ func (h *handlerV1) GetTodosByDeadline(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// UpdateUser updates user by id
+// UpdateTodo updates todo by id
 // route /v1/todos/{id} [put]
 func (h *handlerV1) UpdateTodo(c *gin.Context) {
 	var (
@@ -178,7 +178,7 @@ func (h *handlerV1) UpdateTodo(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// DeleteTodo deletes user by id
+// DeleteTodo deletes todo by id
 // route /v1/todo/{id} [delete]
 func (h *handlerV1) DeleteTodo(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
