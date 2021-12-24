@@ -1,0 +1,240 @@
+definitions:
+  models.CreateTodo:
+    properties:
+      assignee:
+        type: string
+      deadline:
+        type: string
+      status:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  models.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  models.GetTodo:
+    properties:
+      assignee:
+        type: string
+      deadline:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  models.GetTodos:
+    properties:
+      count:
+        type: integer
+      todos:
+        items:
+          $ref: '#/definitions/models.GetTodo'
+        type: array
+    type: object
+  models.StandardErrorModel:
+    properties:
+      error:
+        $ref: '#/definitions/models.Error'
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/todo/:
+    post:
+      consumes:
+      - application/json
+      description: This API for creating a new todo
+      parameters:
+      - description: TodoCreateRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTodo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTodo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: CreateTodo
+      tags:
+      - todo
+  /v1/todo/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This API for deleting todo
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: DeleteTodo
+      tags:
+      - todo
+    get:
+      consumes:
+      - application/json
+      description: This API for getting todo detail
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTodo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetTodo
+      tags:
+      - todo
+    put:
+      consumes:
+      - application/json
+      description: This API for updating todo
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: userUpdateRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTodo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTodo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: UpdateTodo
+      tags:
+      - todo
+  /v1/todos:
+    get:
+      consumes:
+      - application/json
+      description: This API for getting list of todos
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTodos'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetTodos
+      tags:
+      - todo
+  /v1/todos/{time}:
+    get:
+      consumes:
+      - application/json
+      description: This API for getting list of todos
+      parameters:
+      - description: time
+        in: path
+        name: time
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTodos'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetTodosByDeadline
+      tags:
+      - todo
+swagger: "2.0"
